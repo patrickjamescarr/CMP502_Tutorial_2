@@ -53,7 +53,7 @@ private:
     void Render();
 
     void DrawStar(float x, float y);
-    void DrawCircle(int sides, float radius, float x, float y);
+    void DrawCircle(float sides, float radius, float x, float y);
 
     float Random() {
         return (float(rand()) / (float(RAND_MAX) + 1.0));
@@ -74,12 +74,12 @@ private:
 
     float degToRad(float deg)
     {
-        return deg * (PI / 180);
+        return deg * (PI / 180.0f);
     }
 
     float radToDeg(float rad)
     {
-        return rad * (180 / PI);
+        return rad * (180.0f / PI);
     }
 
     // Device resources.

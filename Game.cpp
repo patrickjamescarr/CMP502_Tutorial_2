@@ -164,7 +164,7 @@ void Game::Render()
     m_deviceResources->PIXBeginEvent(L"Render");
     auto context = m_deviceResources->GetD3DDeviceContext();
 
-    auto circleSides = easeInOutSinusoidal(m_timer.GetTotalSeconds(), 3, 360, 20);
+    auto circleSides = floor(easeInOutSinusoidal(m_timer.GetTotalSeconds(), 3.0f, 100.0f, 10.0f));
 
     // Draw sprite
     m_deviceResources->PIXBeginEvent(L"Draw sprite");
@@ -187,7 +187,7 @@ void Game::Render()
 
     DrawStar(-1, 0);
 
-    DrawCircle(circleSides, 1, 1.5, 0);
+    DrawCircle(circleSides, 1.0f, 1.5f, 0.0f);
 
     // Show the new frame.
     m_deviceResources->Present();
@@ -219,7 +219,7 @@ void Game::DrawStar(float x, float y)
     m_batch->End();
 }
 
-void Game::DrawCircle(int sides, float radius, float x, float y)
+void Game::DrawCircle(float sides, float radius, float x, float y)
 {
     const int vCount = sides + 1;
     const int iCount = sides * 3;
@@ -228,10 +228,10 @@ void Game::DrawCircle(int sides, float radius, float x, float y)
 
     vArray[0] = VertexPositionColor(Vector3(x, y, 1.0f), circleColours[0]); // centre
 
-    for (int i = 1; i <= sides; i++)
+    for (float i = 1; i <= sides; i++)
     {
         // calculate the point
-        float angle = degToRad(360 / sides * i);
+        float angle = degToRad((360.0f / sides) * i);
         float px = x + radius * cos(angle);
         float py = y + radius * sin(angle);
 
@@ -241,7 +241,6 @@ void Game::DrawCircle(int sides, float radius, float x, float y)
         // populate the index array
         int iArrayBaseIndex = (i - 1) * 3;
         iArray[iArrayBaseIndex + 0] = 0;
-        // depending on how may sides, there's a gap - I'm using a hack to tie it up, but basically it just puts a triangle in the gap :/
         iArray[iArrayBaseIndex + 1] = i == sides ? sides : (i - 1) * 1 + 1;
         iArray[iArrayBaseIndex + 2] = i == sides ? 1 : (i - 1) * 1 + 2;
     }
