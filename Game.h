@@ -47,7 +47,7 @@ private:
 
     std::vector<DirectX::XMFLOAT4> circleColours;
 
-    const float PI = 3.14285714286;
+    const float PI = 3.14159265359;
  
     void Update(DX::StepTimer const& timer);
     void Render();
